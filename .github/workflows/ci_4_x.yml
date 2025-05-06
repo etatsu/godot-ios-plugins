@@ -1,10 +1,11 @@
 name: Continuous integration 4.x
-on: [push, pull_request]
+on: 
+  workflow_dispatch:
 
 jobs:
   build:
     name: Build (macOS)
-    runs-on: "macos-latest"
+    runs-on: "macos-15"
 
     steps:
       - uses: actions/checkout@v2
@@ -26,11 +27,11 @@ jobs:
 
       - name: Generate Headers
         run: |
-          ./scripts/generate_headers.sh 4.0 || true
+          ./scripts/generate_headers.sh 4.x || true
 
       - name: Compile Plugins
         run: |
-          ./scripts/release_xcframework.sh 4.0
+          ./scripts/release_xcframework.sh 4.x
           ls -l bin/release
 
       - uses: actions/upload-artifact@v4
